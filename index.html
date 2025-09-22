@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>CurioTrinket AR Mobile</title>
+  <title>CurioTrinket AR</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
 </head>
@@ -16,7 +16,7 @@
   <a-entity light="type: ambient; intensity: 0.5"></a-entity>
   <a-entity light="type: directional; intensity: 1" position="1 2 1" castShadow></a-entity>
 
-  <!-- Tiny mobile-friendly trinket -->
+  <!-- Gold Coin Model -->
   <a-entity id="trinket"
             gltf-model="url(https://cdn.jsdelivr.net/gh/curiocrates/ar-assets/trinkets/gold_coin_small.glb)"
             scale="0.05 0.05 0.05"
@@ -25,7 +25,7 @@
             shadow="cast: true; receive: true">
   </a-entity>
 
-  <!-- Info text -->
+  <!-- Info Text -->
   <a-text id="info"
           value="Ancient Gold Coin"
           position="0 0.3 -0.5"
@@ -34,7 +34,7 @@
           align="center">
   </a-text>
 
-  <!-- Camera + cursor -->
+  <!-- Camera + Cursor -->
   <a-entity camera>
     <a-entity cursor="fuse: false; rayOrigin: mouse"></a-entity>
   </a-entity>
@@ -45,13 +45,14 @@
   const trinket = document.querySelector('#trinket');
   const info = document.querySelector('#info');
 
-  // Show trinket after camera initializes
+  // Wait for AR source to be ready
   const sceneEl = document.querySelector('a-scene');
   sceneEl.addEventListener('renderstart', () => {
+    // Show trinket after camera feed is loaded
     trinket.setAttribute('visible', 'true');
   });
 
-  // Tap to toggle info
+  // Interaction: tap to toggle info
   trinket.addEventListener('click', () => {
     info.setAttribute('visible', info.getAttribute('visible') === 'true' ? 'false' : 'true');
   });
