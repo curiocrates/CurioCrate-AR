@@ -12,13 +12,13 @@
          vr-mode-ui="enabled: false"
          arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; sourceWidth: 320; sourceHeight: 240; maxDetectionRate: 20;">
 
-  <!-- Lighting for premium look -->
+  <!-- Lighting -->
   <a-entity light="type: ambient; intensity: 0.5"></a-entity>
   <a-entity light="type: directional; intensity: 1" position="1 2 1" castShadow></a-entity>
 
-  <!-- Trinket model (tiny, verified to load) -->
+  <!-- Tiny mobile-friendly trinket -->
   <a-entity id="trinket"
-            gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models/2.0/Avocado/glTF-Binary/Avocado.glb)"
+            gltf-model="url(https://cdn.jsdelivr.net/gh/curiocrates/ar-assets/trinkets/gold_coin_small.glb)"
             scale="0.05 0.05 0.05"
             position="0 0 -0.5"
             visible="false"
@@ -27,7 +27,7 @@
 
   <!-- Info text -->
   <a-text id="info"
-          value="Premium Trinket"
+          value="Ancient Gold Coin"
           position="0 0.3 -0.5"
           color="#FFD700"
           visible="false"
@@ -36,4 +36,26 @@
 
   <!-- Camera + cursor -->
   <a-entity camera>
-    <a-entity cursor="fuse: false; rayOrigin
+    <a-entity cursor="fuse: false; rayOrigin: mouse"></a-entity>
+  </a-entity>
+
+</a-scene>
+
+<script>
+  const trinket = document.querySelector('#trinket');
+  const info = document.querySelector('#info');
+
+  // Show trinket after camera initializes
+  const sceneEl = document.querySelector('a-scene');
+  sceneEl.addEventListener('renderstart', () => {
+    trinket.setAttribute('visible', 'true');
+  });
+
+  // Tap to toggle info
+  trinket.addEventListener('click', () => {
+    info.setAttribute('visible', info.getAttribute('visible') === 'true' ? 'false' : 'true');
+  });
+</script>
+
+</body>
+</html>
