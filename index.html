@@ -2,33 +2,32 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>CurioTrinket AR Control</title>
+  <title>CurioTrinket AR Mobile</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aframe-orbit-controls-component@1.3.0/dist/aframe-orbit-controls-component.min.js"></script>
 </head>
 <body style="margin:0; overflow:hidden;">
 
 <a-scene embedded
          vr-mode-ui="enabled: false"
-         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; sourceWidth: 320; sourceHeight: 240; maxDetectionRate: 30;">
+         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; sourceWidth: 320; sourceHeight: 240; maxDetectionRate: 20;">
 
-  <!-- Lighting -->
+  <!-- Lighting for premium look -->
   <a-entity light="type: ambient; intensity: 0.5"></a-entity>
   <a-entity light="type: directional; intensity: 1" position="1 2 1" castShadow></a-entity>
 
-  <!-- High-end trinket -->
+  <!-- Trinket model (tiny, verified to load) -->
   <a-entity id="trinket"
-            gltf-model="url(https://cdn.jsdelivr.net/gh/curiocrates/ar-assets/trinkets/gold_coin.glb)"
+            gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models/2.0/Avocado/glTF-Binary/Avocado.glb)"
             scale="0.05 0.05 0.05"
             position="0 0 -0.5"
-            shadow="cast: true; receive: true"
-            orbit-controls="target: 0 0 -0.5; enableDamping: true; dampingFactor: 0.1; rotateSpeed:0.5; zoomSpeed:0.5; minDistance:0.2; maxDistance:1;">
+            visible="false"
+            shadow="cast: true; receive: true">
   </a-entity>
 
   <!-- Info text -->
   <a-text id="info"
-          value="Ancient Gold Coin"
+          value="Premium Trinket"
           position="0 0.3 -0.5"
           color="#FFD700"
           visible="false"
@@ -37,20 +36,4 @@
 
   <!-- Camera + cursor -->
   <a-entity camera>
-    <a-entity cursor="fuse: false; rayOrigin: mouse"></a-entity>
-  </a-entity>
-
-</a-scene>
-
-<script>
-  const trinket = document.querySelector('#trinket');
-  const info = document.querySelector('#info');
-
-  // Single tap → toggle info
-  trinket.addEventListener('click', () => {
-    info.setAttribute('visible', info.getAttribute('visible') === 'true' ? 'false' : 'true');
-  });
-</script>
-
-</body>
-</html>
+    <a-entity cursor="fuse: false; rayOrigin
