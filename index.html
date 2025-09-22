@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,16 +12,24 @@
       embedded
       arjs="sourceType: webcam; debugUIEnabled: false;">
       
-      <!-- Realistic crate -->
+      <!-- Realistic wooden crate -->
       <a-entity id="crate"
-                gltf-model="url(https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models/2.0/BoxTextured/glTF-Binary/BoxTextured.glb)"
-                scale="0.5 0.5 0.5"
+                gltf-model="url(https://cdn.jsdelivr.net/gh/curiocrates/ar-assets/crate/CrateWood.glb)"
+                scale="0.4 0.4 0.4"
                 position="0 0 -1.5">
       </a-entity>
 
+      <!-- Hidden curio inside the crate -->
+      <a-sphere id="curio"
+                position="0 0.2 -1.5"
+                radius="0.1"
+                color="#FFD700"
+                visible="false">
+      </a-sphere>
+
       <!-- Puzzle text -->
       <a-text id="puzzle"
-              value="Solve me..."
+              value="You found it!"
               position="0 0.8 -1.5"
               color="yellow"
               visible="false"
@@ -33,17 +42,23 @@
 
     <script>
       const crate = document.querySelector('#crate');
+      const curio = document.querySelector('#curio');
       const puzzle = document.querySelector('#puzzle');
 
       crate.addEventListener('click', () => {
-        // Rotate crate when clicked
+        // Animate crate opening (rotate slightly)
         crate.setAttribute('animation', {
           property: 'rotation',
           to: '0 90 0',
           dur: 1000,
           easing: 'easeOutQuad'
         });
-        puzzle.setAttribute('visible', 'true');
+
+        // Reveal curio and puzzle after animation
+        setTimeout(() => {
+          curio.setAttribute('visible', 'true');
+          puzzle.setAttribute('visible', 'true');
+        }, 1000);
       });
     </script>
   </body>
