@@ -8,21 +8,22 @@
 </head>
 <body style="margin:0; overflow:hidden;">
 
-<a-scene embedded>
+<a-scene embedded vr-mode-ui="enabled: false">
 
-  <!-- Camera feed as video texture -->
+  <!-- Camera feed as background -->
   <a-assets>
     <video id="camVideo" autoplay playsinline webkit-playsinline></video>
   </a-assets>
 
-  <a-sky src="#camVideo" rotation="0 -90 0"></a-sky>
+  <a-sky src="#camVideo"></a-sky>
 
   <!-- Interactive Cube -->
-  <a-box position="0 1 -2"
+  <a-box id="cube"
+         position="0 1 -1"
          rotation="0 45 0"
-         width="0.3" height="0.3" depth="0.3"
+         width="0.2" height="0.2" depth="0.2"
          color="gold"
-         orbit-controls="target: 0 1 -2; enableDamping: true; dampingFactor:0.1; rotateSpeed:0.5; zoomSpeed:0.5; minDistance:0.5; maxDistance:5">
+         orbit-controls="target: 0 1 -1; enableDamping: true; dampingFactor:0.1; rotateSpeed:0.8; zoomSpeed:0.8; minDistance:0.3; maxDistance:2">
   </a-box>
 
   <!-- Camera -->
@@ -31,7 +32,7 @@
 </a-scene>
 
 <script>
-  // Access camera feed
+  // Access rear camera
   const video = document.querySelector("#camVideo");
   navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false })
     .then(stream => { video.srcObject = stream; })
