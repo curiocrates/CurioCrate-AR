@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CurioCrate AR Demo</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body style="margin:0; overflow:hidden;">
+    <a-scene
+      embedded
+      xr-mode-ui="enabled: true"
+      webxr="optionalFeatures: hit-test"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+      
+      <!-- Light -->
+      <a-entity light="type: directional; intensity: 1" position="1 2 1"></a-entity>
+      <a-entity light="type: ambient; intensity: 0.5"></a-entity>
+
+      <!-- Crate -->
+      <a-box id="crate" position="0 0 -2" depth="1" height="1" width="1" color="#8B5A2B" class="clickable"></a-box>
+
+      <!-- Puzzle text -->
+      <a-text id="puzzle" value="Solve me..." position="0 1 -2" color="yellow" visible="false"></a-text>
+
+      <!-- Camera -->
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+      const crate = document.querySelector('#crate');
+      const puzzle = document.querySelector('#puzzle');
+
+      crate.addEventListener('click', () => {
+        crate.setAttribute('animation', {
+          property: 'rotation',
+          to: '0 45 0',
+          dur: 1000,
+          easing: 'easeOutQuad'
+        });
+        puzzle.setAttribute('visible', 'true');
+      });
+    </script>
+  </body>
+</html>
