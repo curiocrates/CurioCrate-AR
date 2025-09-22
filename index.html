@@ -11,91 +11,61 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.159.0/examples/js/controls/OrbitControls.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.159.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x111111);
+  // Scene
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x111111);
 
-// Camera
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
-camera.position.set(0, 1, 3);
+  // Camera
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
+  camera.position.set(0, 1, 3);
 
-// Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-document.body.appendChild(renderer.domElement);
-
-// Orbit controls
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.1;
-controls.minDistance = 1;
-controls.maxDistance = 5;
-
-// Lights
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
-
-const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-dirLight.position.set(5, 5, 5);
-dirLight.castShadow = true;
-dirLight.shadow.mapSize.width = 1024;
-dirLight.shadow.mapSize.height = 1024;
-scene.add(dirLight);
-
-const pointLight = new THREE.PointLight(0xffddaa, 1, 10);
-pointLight.position.set(-3,2,2);
-scene.add(pointLight);
-
-// Trinket: gold coin with beveled edge
-const coinGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.05, 64, 1, true);
-const coinMaterial = new THREE.MeshStandardMaterial({
-  color: 0xFFD700,
-  metalness: 1,
-  roughness: 0.25,
-  side: THREE.DoubleSide
-});
-const coin = new THREE.Mesh(coinGeometry, coinMaterial);
-coin.rotation.x = Math.PI / 2;
-coin.castShadow = true;
-coin.receiveShadow = true;
-scene.add(coin);
-
-// Optional: add a gem on top
-const gemGeometry = new THREE.OctahedronGeometry(0.15, 0);
-const gemMaterial = new THREE.MeshPhysicalMaterial({
-  color: 0x00ffff,
-  metalness: 0,
-  roughness: 0.1,
-  transmission: 1,
-  transparent: true,
-  thickness: 0.5,
-  clearcoat: 1,
-  clearcoatRoughness: 0
-});
-const gem = new THREE.Mesh(gemGeometry, gemMaterial);
-gem.position.y = 0.05;
-scene.add(gem);
-
-// Animation
-function animate() {
-  requestAnimationFrame(animate);
-  coin.rotation.y += 0.01; // slow spin
-  gem.rotation.y += 0.02; // gem spins slightly faster
-  controls.update();
-  renderer.render(scene, camera);
-}
-animate();
-
-// Handle window resize
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth/window.innerHeight;
-  camera.updateProjectionMatrix();
+  // Renderer
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-});
+  document.body.appendChild(renderer.domElement);
+
+  // Controls
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.1;
+  controls.minDistance = 1;
+  controls.maxDistance = 5;
+
+  // Lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(5,5,5);
+  scene.add(directionalLight);
+
+  // Gold coin
+  const coinGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.05, 64);
+  const coinMaterial = new THREE.MeshStandardMaterial({
+    color: 0xFFD700,
+    metalness: 1,
+    roughness: 0.25
+  });
+  const coin = new THREE.Mesh(coinGeometry, coinMaterial);
+  coin.rotation.x = Math.PI / 2;
+  scene.add(coin);
+
+  // Animation
+  function animate() {
+    requestAnimationFrame(animate);
+    coin.rotation.y += 0.01;
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Handle resize
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 </script>
 </body>
 </html>
